@@ -11,7 +11,7 @@ const categoriesRoutes = Router()
 //middleware responsavel por pegar o arquivo
 const upload = multer({
     dest: "./tmp",
-})
+})  
 
 categoriesRoutes.post("/", (req, res) => {
     return createCategoryController.handle(req, res)
