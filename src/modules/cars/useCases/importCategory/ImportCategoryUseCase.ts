@@ -30,6 +30,8 @@ class ImportCategoryUseCase {
                 })
             })
             .on("end", () => {
+                //remove o arquivo da pasta tmp assim que finalizar a promise
+                fs.promises.unlink(file.path)
                 resolve(categories)
             })
             .on("error", (err) => {
