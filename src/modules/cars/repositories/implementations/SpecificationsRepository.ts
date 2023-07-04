@@ -1,3 +1,4 @@
+import { prismaClient } from "../../../../database/prismaClient";
 import { Specification } from "../../entities/Specification";
 import { ICreateSpecificationDTO, ISpecificationsRepository } from "../ISpecificationsRepository";
 
@@ -8,7 +9,7 @@ class SpecificationsRepository implements ISpecificationsRepository {
     private static INSTANCE: SpecificationsRepository
 
     constructor() {
-        this.specifications = [];
+        
     }
 
     public static getInstance(): SpecificationsRepository {
@@ -18,26 +19,27 @@ class SpecificationsRepository implements ISpecificationsRepository {
         return SpecificationsRepository.INSTANCE
     }
     
-    create({ name, description }: ICreateSpecificationDTO): void {
-        const specifications = new Specification()
-
-        Object.assign(specifications, {
-            name,
-            description,
-            created_at: new Date()
+    async create({ name, description }: ICreateSpecificationDTO): Promise<void> {
+        await prismaClient.specifications.create({
+            data: {
+                name,
+                description
+            }
         })
-
-        this.specifications.push(specifications)
     }
 
-    findByName(name: string): Specification {
-        const specification =  this.specifications.find((specification) => specification.name === name)
-
-        return specification;
+    async findByName(name: string): Promise<Specification> {
+        const nameAlreadyExist = await prismaClient.specifications.findUnique({
+            where: {
+                name,
+            }
+        })
+        return nameAlreadyExist
     }
 
-    list(): Specification[] {
-        return this.specifications;
+    async list(): Promise<Specification[]> {
+        const specifications = await prismaClient.specifications.findMany()
+        return specifications
     }
 }
 
