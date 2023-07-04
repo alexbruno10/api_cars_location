@@ -17,5 +17,6 @@ model Categories {
   description String
   created_at DateTime @default(now())
 
+  @@unique([name])
   @@map("categories")
 }
