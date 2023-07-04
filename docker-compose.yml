@@ -17,6 +17,7 @@ services:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
       - POSTGRES_DB=rentx
+      - DATABASE_URL="${DATABASE_URL}"
   app:
     build: .
     container_name: rentx
