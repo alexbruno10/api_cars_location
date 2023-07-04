@@ -10,7 +10,7 @@ class CategoriesRepository implements ICategoryRepository {
     //singleton para instanciar uma classe
     private static INSTANCE: CategoriesRepository
 
-    private constructor() {
+    constructor() {
         // this.categories = []
     }
 
@@ -23,32 +23,26 @@ class CategoriesRepository implements ICategoryRepository {
 
     async create( {name, description} : ICreateCategoryDTO ) : Promise<void> {
 
-        // const category = new Category()
-        // //Forma de atribuir os valores no objeto 
-        // Object.assign(category, {
-        //     name,
-        //     description,
-        //     created_at: new Date()
-        // })
-
-
         await prismaClient.categories.create({
             data: {
                 name,
                 description
             }
         })
-        // this.categories.push(category)
-
     }
 
-    list(): Category[] {
-        return this.categories;
+    async list(): Promise<Category[]> {
+        const categories = await prismaClient.categories.findMany()
+        return categories
     }
 
-    findByName(name: string): Category {
-        const category = this.categories.find((category) => category.name === name)
-        return category
+    async findByName(name: string): Promise<Category> {
+        const nameAlreadyExist = await prismaClient.categories.findUnique({
+            where: {
+                name,
+            }
+        })
+        return nameAlreadyExist
     }
      
 }
