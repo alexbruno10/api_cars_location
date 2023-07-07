@@ -1,4 +1,3 @@
-import { PrismaClient } from "@prisma/client";
 import { prismaClient } from "../../../../database/prismaClient";
 import { Category } from "../../entities/Category";
 import { ICategoryRepository, ICreateCategoryDTO } from "../ICategoriesRepository";
