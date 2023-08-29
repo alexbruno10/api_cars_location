@@ -35,6 +35,15 @@ class UsersRepository implements IUsersRepository {
         })
         return emailAlreadyExist
     }
+
+    async findById(id: string): Promise<User> {
+        const user = await prismaClient.users.findUnique({
+            where: {
+                id,
+            }
+        })
+        return user
+    }
      
 }
 
