@@ -1,3 +1,4 @@
+import { AppError } from "../../../errors/AppError"
 import { ISpecificationsRepository } from "../repositories/ISpecificationsRepository"
  
 interface IRequest {
@@ -13,7 +14,7 @@ class CreateSpecificationService {
     const specificationAlreadyExist = this.specificationsRepository.findByName(name)
 
         if(specificationAlreadyExist) {
-            throw new Error("Category already exist!")
+            throw new AppError("Category already exist!")
         }
 
         this.specificationsRepository.create({ name, description })
