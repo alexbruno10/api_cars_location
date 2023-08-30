@@ -9,7 +9,7 @@ class UsersRepository implements IUsersRepository {
       
     }
 
-    async create( {name, username, email, password, driver_licence} : ICreateUserDTO ) : Promise<void> {
+    async create( {name, username, email, password, driver_licence, avatar, id} : ICreateUserDTO ) : Promise<void> {
 
         await prismaClient.users.create({
             data: {
@@ -17,7 +17,9 @@ class UsersRepository implements IUsersRepository {
                 username,
                 email, 
                 password,
-                driver_licence
+                driver_licence,
+                avatar,
+                id,
             }
         })
     }

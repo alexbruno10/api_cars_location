@@ -8,7 +8,8 @@ class User {
     password: string;
     driver_licence: string;
     isAdmin: boolean;
-    created_at: Date
+    created_at: Date;
+    avatar: string
 
     constructor() {
         if(!this.id) {
